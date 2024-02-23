@@ -12,26 +12,6 @@ import (
 	"github.com/alist-org/alist/v3/pkg/utils/random"
 )
 
-// 配置结构体
-type Config struct {
-	Force                 bool        `json:"force" env:"FORCE"`
-	SiteURL               string      `json:"site_url" env:"SITE_URL"`
-	Cdn                   string      `json:"cdn" env:"CDN"`
-	JwtSecret             string      `json:"jwt_secret" env:"JWT_SECRET"`
-	TokenExpiresIn        int         `json:"token_expires_in" env:"TOKEN_EXPIRES_IN"`
-	Database              Database    `json:"database" envPrefix:"DB_"`
-	Scheme                Scheme      `json:"scheme"`
-	TempDir               string      `json:"temp_dir" env:"TEMP_DIR"`
-	BleveDir              string      `json:"bleve_dir" env:"BLEVE_DIR"`
-	DistDir               string      `json:"dist_dir"`
-	Log                   LogConfig   `json:"log"`
-	DelayedStart          int         `json:"delayed_start" env:"DELAYED_START"`
-	MaxConnections        int         `json:"max_connections" env:"MAX_CONNECTIONS"`
-	TlsInsecureSkipVerify bool        `json:"tls_insecure_skip_verify" env:"TLS_INSECURE_SKIP_VERIFY"`
-	Tasks                 TasksConfig `json:"tasks" envPrefix:"TASKS_"`
-	Cors                  Cors        `json:"cors" envPrefix:"CORS_"`
-}
-
 // 数据库配置结构体
 type Database struct {
 	Type        string `json:"type" env:"TYPE"`
@@ -43,6 +23,14 @@ type Database struct {
 	DBFile      string `json:"db_file" env:"FILE"`
 	TablePrefix string `json:"table_prefix" env:"TABLE_PREFIX"`
 	SSLMode     string `json:"ssl_mode" env:"SSL_MODE"`
+	DSN         string `json:"dsn" env:"DSN"`
+}
+
+// Meilisearch 结构体
+type Meilisearch struct {
+	Host        string `json:"host" env:"HOST"`
+	APIKey      string `json:"api_key" env:"API_KEY"`
+	IndexPrefix string `json:"index_prefix" env:"INDEX_PREFIX"`
 }
 
 // 服务器配置结构体
@@ -86,6 +74,27 @@ type Cors struct {
 	AllowOrigins []string `json:"allow_origins" env:"ALLOW_ORIGINS"`
 	AllowMethods []string `json:"allow_methods" env:"ALLOW_METHODS"`
 	AllowHeaders []string `json:"allow_headers" env:"ALLOW_HEADERS"`
+}
+
+// 配置结构体
+type Config struct {
+	Force                 bool        `json:"force" env:"FORCE"`
+	SiteURL               string      `json:"site_url" env:"SITE_URL"`
+	Cdn                   string      `json:"cdn" env:"CDN"`
+	JwtSecret             string      `json:"jwt_secret" env:"JWT_SECRET"`
+	TokenExpiresIn        int         `json:"token_expires_in" env:"TOKEN_EXPIRES_IN"`
+	Database              Database    `json:"database" envPrefix:"DB_"`
+	Meilisearch           Meilisearch `json:"meilisearch" env:"MEILISEARCH"`
+	Scheme                Scheme      `json:"scheme"`
+	TempDir               string      `json:"temp_dir" env:"TEMP_DIR"`
+	BleveDir              string      `json:"bleve_dir" env:"BLEVE_DIR"`
+	DistDir               string      `json:"dist_dir"`
+	Log                   LogConfig   `json:"log"`
+	DelayedStart          int         `json:"delayed_start" env:"DELAYED_START"`
+	MaxConnections        int         `json:"max_connections" env:"MAX_CONNECTIONS"`
+	TlsInsecureSkipVerify bool        `json:"tls_insecure_skip_verify" env:"TLS_INSECURE_SKIP_VERIFY"`
+	Tasks                 TasksConfig `json:"tasks" envPrefix:"TASKS_"`
+	Cors                  Cors        `json:"cors" envPrefix:"CORS_"`
 }
 
 // 初始化配置
@@ -142,6 +151,9 @@ func initConfig(configFilePath string) *Config {
 			TablePrefix: "x_",
 			DBFile:      "data/data.db",
 		},
+		Meilisearch: Meilisearch{
+			Host: "http://localhost:7700",
+		},
 		BleveDir: "data/bleve",
 		Log: LogConfig{
 			Enable:     true,
@@ -177,6 +189,7 @@ func initConfig(configFilePath string) *Config {
 	}
 }
 
+// 写入配置文件
 func main() {
 	configFilePath := "/opt/alist/data/config.json"
 	config := initConfig(configFilePath)
