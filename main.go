@@ -76,6 +76,13 @@ type Cors struct {
 	AllowHeaders []string `json:"allow_headers" env:"ALLOW_HEADERS"`
 }
 
+// S3 结构体
+type S3 struct {
+	Enable bool `json:"enable" env:"ENABLE"`
+	Port   int  `json:"port" env:"PORT"`
+	SSL    bool `json:"ssl" env:"SSL"`
+}
+
 // 配置结构体
 type Config struct {
 	Force                 bool        `json:"force" env:"FORCE"`
@@ -95,6 +102,7 @@ type Config struct {
 	TlsInsecureSkipVerify bool        `json:"tls_insecure_skip_verify" env:"TLS_INSECURE_SKIP_VERIFY"`
 	Tasks                 TasksConfig `json:"tasks" envPrefix:"TASKS_"`
 	Cors                  Cors        `json:"cors" envPrefix:"CORS_"`
+	S3                    S3          `json:"s3" envPrefix:"S3_"`
 }
 
 // 初始化配置
@@ -185,6 +193,11 @@ func initConfig(configFilePath string) *Config {
 			AllowOrigins: []string{"*"},
 			AllowMethods: []string{"*"},
 			AllowHeaders: []string{"*"},
+		},
+		S3: S3{
+			Enable: false,
+			Port:   5246,
+			SSL:    false,
 		},
 	}
 }
