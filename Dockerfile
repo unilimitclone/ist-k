@@ -1,4 +1,4 @@
-FROM alpine:3.19 as builder
+FROM alpine:3.20 as builder
 LABEL stage=go-builder
 WORKDIR /root/
 COPY ./ ./
@@ -11,7 +11,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
 FROM xhofe/alist:latest as alist
 LABEL stage=go-builder
 
-FROM alpine:3.19
+FROM alpine:3.20
 
 ARG DATABASE_URL
 ENV PUID=0 PGID=0 UMASK=022 DB_TYPE=postgres DB_SSL_MODE=require
