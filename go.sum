@@ -1,4 +1,6 @@
 github.com/alist-org/alist/v3 v3.35.0 h1:dt1zJ7INo5s0rsytDj3bxku+s2eEAh4IFnTuyiFec3Q=
 github.com/alist-org/alist/v3 v3.35.0/go.mod h1:cOrMPZ7zpICJC/RSZl5TEUxOCuYj/10pSKUzxPGSx3k=
+github.com/alist-org/alist/v3 v3.36.0 h1:KBICMDFWdW7v0eqXmMjGD1Wq28cL/2k6rx3QtiS8lWM=
+github.com/alist-org/alist/v3 v3.36.0/go.mod h1:rV26mH0Upc9qP15HeXsSqIMPxLb6RidBkN7/bj2XsMQ=
 github.com/google/uuid v1.6.0 h1:NIvaJDMOsjHA8n1jAhLSgzrAzy1Hgr+hNrb57e+94F0=
 github.com/google/uuid v1.6.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
