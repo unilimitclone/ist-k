@@ -2,7 +2,7 @@ module github.com/dreamoeu/alist-northflank-postgres
 
 go 1.22.4
 
-toolchain go1.22.6
+toolchain go1.23.0
 
 require github.com/alist-org/alist/v3 v3.36.0
 

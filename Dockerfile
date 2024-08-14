@@ -1,4 +1,4 @@
-FROM alpine:3.20 AS builder
+FROM alpine:edge AS builder
 LABEL stage=go-builder
 WORKDIR /root/
 COPY ./ ./
@@ -8,7 +8,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/reposit
     rm -rf /var/cache/apk/*; \
     go build -o main -ldflags='-s -w -extldflags "-static -fpic"' -tags=jsoniter main.go
 
-FROM alpine:3.20
+FROM alpine:edge
 
 ARG DATABASE_URL
 ENV PUID=0 PGID=0 UMASK=022 DB_TYPE=postgres DB_SSL_MODE=require
