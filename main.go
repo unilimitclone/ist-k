@@ -57,8 +57,9 @@ type LogConfig struct {
 
 // TaskConfig 结构体
 type TaskConfig struct {
-	Workers  int `json:"workers" env:"WORKERS"`
-	MaxRetry int `json:"max_retry" env:"MAX_RETRY"`
+	Workers        int  `json:"workers" env:"WORKERS"`
+	MaxRetry       int  `json:"max_retry" env:"MAX_RETRY"`
+	TaskPersistant bool `json:"task_persistant" env:"TASK_PERSISTANT"`
 }
 
 // TasksConfig 结构体
@@ -174,19 +175,22 @@ func initConfig(configFilePath string) *Config {
 		TlsInsecureSkipVerify: true,
 		Tasks: TasksConfig{
 			Download: TaskConfig{
-				Workers:  5,
-				MaxRetry: 1,
+				Workers:        5,
+				MaxRetry:       1,
+				TaskPersistant: true,
 			},
 			Transfer: TaskConfig{
-				Workers:  5,
-				MaxRetry: 2,
+				Workers:        5,
+				MaxRetry:       2,
+				TaskPersistant: true,
 			},
 			Upload: TaskConfig{
 				Workers: 5,
 			},
 			Copy: TaskConfig{
-				Workers:  5,
-				MaxRetry: 2,
+				Workers:        5,
+				MaxRetry:       2,
+				TaskPersistant: true,
 			},
 		},
 		Cors: Cors{
