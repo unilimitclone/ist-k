@@ -23,8 +23,8 @@ COPY --from=builder /root/install.sh /install.sh
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories; \
     apk upgrade --no-cache; \
     apk --update --no-cache add bash ca-certificates su-exec supervisor tzdata; \
-    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
-    echo "Asia/Shanghai" > /etc/timezone; \
+    ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime; \
+    echo "Asia/Kolkata" > /etc/timezone; \
     rm -rf /var/cache/apk/*; \
     chmod +x /main /usr/bin/entrypoint.sh /install.sh; \
     /install.sh
