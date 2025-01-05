@@ -84,6 +84,26 @@ type S3 struct {
 	SSL    bool `json:"ssl" env:"SSL"`
 }
 
+// FTP 结构体
+type FTP struct {
+	Enable                  bool   `json:"enable" env:"ENABLE"`
+	Listen                  string `json:"listen" env:"LISTEN"`
+	FindPasvPortAttempts    int    `json:"find_pasv_port_attempts" env:"FIND_PASV_PORT_ATTEMPTS"`
+	ActiveTransferPortNon20 bool   `json:"active_transfer_port_non_20" env:"ACTIVE_TRANSFER_PORT_NON_20"`
+	IdleTimeout             int    `json:"idle_timeout" env:"IDLE_TIMEOUT"`
+	ConnectionTimeout       int    `json:"connection_timeout" env:"CONNECTION_TIMEOUT"`
+	DisableActiveMode       bool   `json:"disable_active_mode" env:"DISABLE_ACTIVE_MODE"`
+	DefaultTransferBinary   bool   `json:"default_transfer_binary" env:"DEFAULT_TRANSFER_BINARY"`
+	EnableActiveConnIPCheck bool   `json:"enable_active_conn_ip_check" env:"ENABLE_ACTIVE_CONN_IP_CHECK"`
+	EnablePasvConnIPCheck   bool   `json:"enable_pasv_conn_ip_check" env:"ENABLE_PASV_CONN_IP_CHECK"`
+}
+
+// SFTP 结构体
+type SFTP struct {
+	Enable bool   `json:"enable" env:"ENABLE"`
+	Listen string `json:"listen" env:"LISTEN"`
+}
+
 // 配置结构体
 type Config struct {
 	Force                 bool        `json:"force" env:"FORCE"`
@@ -104,6 +124,8 @@ type Config struct {
 	Tasks                 TasksConfig `json:"tasks" envPrefix:"TASKS_"`
 	Cors                  Cors        `json:"cors" envPrefix:"CORS_"`
 	S3                    S3          `json:"s3" envPrefix:"S3_"`
+	FTP                   FTP         `json:"ftp" envPrefix:"FTP_"`
+	SFTP                  SFTP        `json:"sftp" envPrefix:"SFTP_"`
 }
 
 // 初始化配置
@@ -175,22 +197,22 @@ func initConfig(configFilePath string) *Config {
 		TlsInsecureSkipVerify: true,
 		Tasks: TasksConfig{
 			Download: TaskConfig{
-				Workers:        5,
-				MaxRetry:       1,
-				TaskPersistant: true,
+				Workers:  5,
+				MaxRetry: 1,
+				// TaskPersistant: true,
 			},
 			Transfer: TaskConfig{
-				Workers:        5,
-				MaxRetry:       2,
-				TaskPersistant: true,
+				Workers:  5,
+				MaxRetry: 2,
+				// TaskPersistant: true,
 			},
 			Upload: TaskConfig{
 				Workers: 5,
 			},
 			Copy: TaskConfig{
-				Workers:        5,
-				MaxRetry:       2,
-				TaskPersistant: true,
+				Workers:  5,
+				MaxRetry: 2,
+				// TaskPersistant: true,
 			},
 		},
 		Cors: Cors{
@@ -202,6 +224,22 @@ func initConfig(configFilePath string) *Config {
 			Enable: false,
 			Port:   5246,
 			SSL:    false,
+		},
+		FTP: FTP{
+			Enable:                  false,
+			Listen:                  ":5221",
+			FindPasvPortAttempts:    50,
+			ActiveTransferPortNon20: false,
+			IdleTimeout:             900,
+			ConnectionTimeout:       30,
+			DisableActiveMode:       false,
+			DefaultTransferBinary:   false,
+			EnableActiveConnIPCheck: true,
+			EnablePasvConnIPCheck:   true,
+		},
+		SFTP: SFTP{
+			Enable: false,
+			Listen: ":5222",
 		},
 	}
 }
