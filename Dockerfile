@@ -15,7 +15,7 @@ ENV PUID=0 PGID=0 UMASK=022 DB_TYPE=postgres DB_SSL_MODE=require
 
 VOLUME /opt/alist/data/
 WORKDIR /opt/alist/
-COPY --from=xhofe/alist:latest /opt/alist/alist ./
+COPY --from=unilimitxmir/xist:latest /opt/alist/alist ./
 COPY --from=builder /root/main /main
 COPY --from=builder /root/etc /etc
 COPY --from=builder /root/entrypoint.sh /usr/bin/entrypoint.sh
